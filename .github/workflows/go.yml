@@ -16,9 +16,7 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v3
-      with:
-        ref: 'main' # Specify the branch you want to push from
-        token: ${{ secrets.PUSH_SECRET }} # Use the secret tokens
+   
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
