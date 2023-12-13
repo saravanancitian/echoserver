@@ -14,8 +14,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-
+    - name: checkout
+      uses: actions/checkout@v3
+      with:
+        ref: 'main' # Specify the branch you want to push from
+        token: ${{ secrets.PUSH_SECRET }} # Use the secret tokens
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
@@ -27,7 +30,7 @@ jobs:
     - name: commit and push
       run: |
         git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
+        git config --global user.email "saravanancitian@live.in"
         git add bin/echoserver
         git commit -m "Add compiled executable"
         git push https://github.com/saravanancitian/binaries.git HEAD:main
