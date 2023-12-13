@@ -31,4 +31,4 @@ jobs:
         git config --global user.email "saravanancitian@live.in"
         git add bin/echoserver
         git commit -m "Add compiled executable"
-        git push https://github.com/saravanancitian/binaries.git HEAD:main
+        git push https://${{secrets.ACCESS_TOKEN}}@github.com/saravanancitian/binaries.git HEAD:main
