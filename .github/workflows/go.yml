@@ -9,10 +9,18 @@ on:
   pull_request:
     branches: [ "main" ]
 
+
+
+
 jobs:
+
 
   build:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+      
     steps:
     - name: checkout
       uses: actions/checkout@v3
@@ -23,12 +31,13 @@ jobs:
         go-version: '1.21.5'
 
     - name: Build
-      run: go build -o bin/echoserver
+      run: make all
 
-    - name: commit and push
-      run: |
-        git config --global user.name "saravanancitian"
-        git config --global user.email "saravanancitian@live.in"
-        git add bin/echoserver
-        git commit -m "Add compiled executable"
-        git push 
+    - uses: shallwefootball/s3-upload-action@master
+      name: Upload S3
+      id: S3
+      with:
+        aws_key_id: ${{ secrets.AWS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+        aws_bucket: ${{ secrets.AWS_BUCKET }}
+        source_dir: 'bin\win'
